@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class BoardController {
+	
 	@ResponseBody
 	@RequestMapping("/board/write")
 	public String write() {
@@ -23,5 +24,5 @@ public class BoardController {
 	public String view(@PathVariable("no") Long number) {
 		return "BoardController:view(" + number + ")";
 	}
-
+	
 }
