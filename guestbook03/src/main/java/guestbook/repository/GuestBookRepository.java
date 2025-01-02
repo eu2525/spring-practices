@@ -1,18 +1,15 @@
 package guestbook.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import guestbook.repository.template.JdbcContext;
-import guestbook.repository.template.StatementStrategy;
 import guestbook.vo.GuestBookVo;
 
 @Repository
@@ -28,58 +25,32 @@ public class GuestBookRepository {
 	
 
 	public List<GuestBookVo> findAll() {
-		List<GuestBookVo> result = new ArrayList<>();
-		
-		try (
-			Connection conn =  dataSource.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("select id, name,contents, date_format(reg_date, '%Y-%m-%d') , reg_date from guestbook order by reg_date desc" );
-			ResultSet rs = pstmt.executeQuery();
-		){
-			while(rs.next()) {
-				Long id = rs.getLong(1);
-				String name = rs.getString(2);
-				String contents = rs.getString(3);
-				String regDate = rs.getString(4);
-
+		return jdbcContext.queryForList(
+		"select id, name, contents, date_format(reg_date, '%Y-%m-%d %h:%i:%s') from guestbook order by reg_date desc",
+		new RowMapper<GuestBookVo>() {
+			@Override
+			public GuestBookVo mapRow(ResultSet rs, int rowNum) throws SQLException {
 				GuestBookVo vo = new GuestBookVo();
-				vo.setId(id);
-				vo.setName(name);
-				vo.setContents(contents);
-				vo.setRegDate(regDate);
-				result.add(vo);
-			}
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-		
-		return result;		
+				
+				vo.setId(rs.getLong(1));
+				vo.setName(rs.getString(2));
+				vo.setContents(rs.getString(3));
+				vo.setRegDate(rs.getString(4));
+				
+				return vo;
+			}	
+		});
 	}
-
 
 	public int insert(GuestBookVo vo) {
-		
-
-		return jdbcContext.insert("insert into guestbook values(null, ?, ?, now(), ?)",
-		new Object[] {vo.getName(), vo.getPassword(),  vo.getContents()});
-
+		return jdbcContext.excuteUpdate(
+				"insert into guestbook values(null, ?, ?, ?, now())",
+				new Object[] {vo.getName(), vo.getPassword(), vo.getContents()});
 	}
 
-	public int deleteByIdandPassword(Long id, String password) {
-		
-//		int count =0;
-//		
-//		try (
-//			Connection conn =  dataSource.getConnection();
-//			PreparedStatement pstmt = conn.prepareStatement("delete from guestbook where password = ? and id = ?");
-//		){	
-//			pstmt.setString(1, password);
-//			pstmt.setLong(2, id);
-//			count = pstmt.executeUpdate();
-//			
-//		} catch (SQLException e) {
-//			System.out.println("error:" + e);
-//		}
-//		
-		return count;
-	}
+	public int deleteByIdAndPassword(Long id, String password) {
+		return jdbcContext.excuteUpdate(
+				"delete from guestbook where id=? and password=?",
+				new Object[] {id, password});
+	}	
 }
