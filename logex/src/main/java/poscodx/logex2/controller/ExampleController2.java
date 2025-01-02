@@ -12,17 +12,17 @@ public class ExampleController2 {
 	/**
 	 *  Logger 생성
 	 */
-	private static final Log LOG = LogFactory.getLog( ExampleController2.class );
+	private static final Log log = LogFactory.getLog( ExampleController2.class );
 	
 	
-	@RequestMapping( "/ex2" )
+	@RequestMapping("/ex2")
 	@ResponseBody
 	public String ex2() {
 		
 		/**
 		 *  이 예제에서는 logback.xml 에서,
 		 *  
-		 *  1. fileAppender2 와 "com.douzone.logexample2" logger 를 살펴 보아야 합니다.
+		 *  1. fileAppender2 와 "poscodx.logexample2" logger 를 살펴 보아야 합니다.
 		 *  
 		 *  2. fileAppender2 에서는 /logex/logex2.log 로그파일 지정과
 		 *  
@@ -36,10 +36,10 @@ public class ExampleController2 {
 		 *  5. 이 로거의 로그 레벨이 INFO 인 것도 로그 파일에서 확인해 보세요.   
 		 */
 
-		LOG.debug( "#ex2 - debug log" );
-		LOG.info( "#ex2 - info log" );
-		LOG.warn( "#ex2 - warn log" );
-		LOG.error( "#ex2 - error log" );
+		log.debug( "#ex2 - debug log" );
+		log.info( "#ex2 - info log" );
+		log.warn( "#ex2 - warn log" );
+		log.error( "#ex2 - error log" );
 		
 		return "Logback Logging Example2";
 	}
