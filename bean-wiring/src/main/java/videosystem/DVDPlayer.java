@@ -10,7 +10,7 @@ public class DVDPlayer {
 		this.dvd = dvd;
 	}
 	
-	public void setDVD(DigitalVideoDisc dvd) {
+	public void setDvd(DigitalVideoDisc dvd) {
 		this.dvd = dvd;
 	}
 	

@@ -43,7 +43,7 @@ public class DVDPlayerConfig {
 	@Bean
 	public DVDPlayer dvdPlayer3(@Qualifier("ironMan") DigitalVideoDisc dvd) {
 		DVDPlayer dvdPlayer = new DVDPlayer();
-		dvdPlayer.setDVD(dvd);
+		dvdPlayer.setDvd(dvd);
 		
 		return dvdPlayer;
 	}
