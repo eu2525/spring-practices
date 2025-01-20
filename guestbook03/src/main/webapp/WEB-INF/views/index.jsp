@@ -37,7 +37,7 @@
 				<td>${vo.id }</td>
 				<td>${vo.name }</td>
 				<td>${vo.regDate }</td>
-				<td><a href="/guestbook03/delete/${vo.id}">삭제</a></td>
+				<td><a href="${pageContext.request.contextPath }/delete/${vo.id }">삭제</a></td>
 			</tr>
 			<tr>
 				<td colspan=4>

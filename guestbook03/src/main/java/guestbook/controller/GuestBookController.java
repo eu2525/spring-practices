@@ -8,14 +8,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import guestbook.repository.GuestBookRepository;
+import guestbook.service.GuestBookService;
 import guestbook.vo.GuestBookVo;
 
 @Controller
 public class GuestBookController {
-	private GuestBookRepository GuestBookRepository;
+	private GuestBookService guestBookService;
 	
-	public GuestBookController(GuestBookRepository GuestBookRepository) {
-		this.GuestBookRepository = GuestBookRepository;
+	public GuestBookController(GuestBookService guestBookService) {
+		this.guestBookService = guestBookService;
 	}
 	
 	@RequestMapping("/")
@@ -36,13 +37,13 @@ public class GuestBookController {
 		System.out.println(ac1 == ac2);
 		*/
 		
-		model.addAttribute("list", GuestBookRepository.findAll());
+		model.addAttribute("list", guestBookService.getContentsList());
 		return "index";
 	}
 	
 	@RequestMapping("/add")
 	public String add(GuestBookVo vo) {
-		GuestBookRepository.insert(vo);
+		guestBookService.addContents(vo);
 		return "redirect:/";
 	}
 	
@@ -55,7 +56,7 @@ public class GuestBookController {
 	public String delete(
 		@PathVariable("id") Long id,
 		@RequestParam(value="password", required=true, defaultValue="") String password) {
-		GuestBookRepository.deleteByIdAndPassword(id, password);
+		guestBookService.deleteContents(id, password);
 		return "redirect:/";
 	}
 }
