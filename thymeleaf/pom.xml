@@ -50,8 +50,6 @@
             <version>${thymeleaf.version}</version>
         </dependency>
 
-
-
         <!-- jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -100,4 +98,5 @@
     <build>
         <finalName>thymeleaf</finalName>
     </build>	
+    
 </project>

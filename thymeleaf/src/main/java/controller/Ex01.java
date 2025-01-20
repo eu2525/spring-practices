@@ -19,6 +19,12 @@ public class Ex01 {
         return "ex01/01";
     }
 
+    @GetMapping({"/02"})
+    public String _02() {
+        // JSTL View
+        return "views/ex01/02";
+    }
+    
     @GetMapping("/03")
     public String _03(Model model) {
         model.addAttribute("iVal", 10);
